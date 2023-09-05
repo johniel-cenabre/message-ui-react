@@ -14,7 +14,7 @@
 }
 
 .messagebox {
-  min-width: 10rem;
+  min-width: 12rem;
   max-width: 80%;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }

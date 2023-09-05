@@ -1,11 +1,14 @@
 import {Button, Card, Form, Input, Row, Space, Typography} from 'antd';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import styles from './Chatroom.module.css';
 import {SEND_MESSAGE, UPDATE_CHAT, chatStore} from '../../store/chatStore';
+
+const PAGE_SIZE = 25;
 
 function Chatroom({username}) {
 
   const [chatState, setChatState] = useState(chatStore.getState());
+  const [visibleChatCount, setVisibleChatCount] = useState(PAGE_SIZE);
 
   useEffect(() => {
     const storageListener = (e) => {
@@ -20,19 +23,29 @@ function Chatroom({username}) {
     return () => window.removeEventListener('storage', storageListener);
   }, []);
 
+  const visibleChat = useMemo(() => {
+    return chatState?.slice(-visibleChatCount);
+  }, [chatState, visibleChatCount]);
+
+  const hasMorePreviousChats = chatState.length !== visibleChat.length;
+
   const formRef = useRef();
   const inputRef = useRef();
   const bottomRef = useRef();
 
   useEffect(() => {
     bottomRef.current.scrollIntoView();
-  });
+  }, [chatState]);
 
-  const onReset = async () => {
+  const onViewPreviousChats = useCallback(() => {
+    setVisibleChatCount((curr) => curr + PAGE_SIZE);
+  }, []);
+
+  const onReset = useCallback(async () => {
     formRef.current.resetFields();
-  };
+  }, [formRef]);
 
-  const onSend = async ({message}) => {
+  const onSend = useCallback(async ({message}) => {
     if (message === "") {
       return;
     }
@@ -45,11 +58,16 @@ function Chatroom({username}) {
 
     await onReset();
     inputRef.current.focus();
-  };
+  }, [inputRef]);
 
   return (
     <Form className={styles.chatroom} ref={formRef} onFinish={onSend}>
-      {chatState?.map((chat, index) => {
+      {hasMorePreviousChats && (
+        <Row justify="center">
+          <Button type="link" onClick={onViewPreviousChats}>see previous chats</Button>
+        </Row>
+      )}
+      {visibleChat?.map((chat, index) => {
 
         const isSystemMessage = !chat.username;
 

@@ -1,0 +1,13 @@
+.welcome {
+  display: grid;
+  min-height: 100vh;
+  min-width: 24rem;
+  justify-content: center;
+  align-content: center;
+  row-gap: 0.5rem;
+}
+
+.title {
+  font-size: x-large;
+  color: gray;
+}

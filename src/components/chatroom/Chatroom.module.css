@@ -36,6 +36,12 @@
   font-size: 1rem;
 }
 
+.system {
+  color: gray;
+  text-align: center;
+  width: 100%;
+}
+
 .textboxRow {
   position: sticky;
   bottom: 0;

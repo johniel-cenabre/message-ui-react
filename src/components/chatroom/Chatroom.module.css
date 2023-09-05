@@ -1,0 +1,54 @@
+.chatroom {
+  display: grid;
+  align-content: end;
+  max-width: 40rem;
+  min-width: 30rem;
+  min-height: 100vh;
+  width: 100%;
+  margin: 0 auto;
+  background-color: whitesmoke;
+}
+
+.chatrow {
+  padding: 1rem 2rem;
+}
+
+.messagebox {
+  min-width: 10rem;
+  max-width: 80%;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.you {
+  background-color: #1677ff;
+}
+
+.you * {
+  color: white;
+}
+
+.user {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.message {
+  font-size: 1rem;
+}
+
+.textboxRow {
+  position: sticky;
+  bottom: 0;
+  background-color: whitesmoke;
+}
+
+.textboxContainer {
+  width: 100%;
+}
+
+.textbox {
+  display: flex;
+  justify-content: stretch;
+  padding: 1rem;
+  margin: 0.5rem 1rem;
+}

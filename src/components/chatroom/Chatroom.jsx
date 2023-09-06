@@ -1,11 +1,13 @@
 import {Button, Card, Form, Input, Row, Space, Typography} from 'antd';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import styles from './Chatroom.module.css';
-import {SEND_MESSAGE, UPDATE_CHAT, chatStore} from '../../store/chatStore';
+import {SEND_MESSAGE, SYNC_CHAT, getChatStore} from '../../store/chatStore';
 
 const PAGE_SIZE = 25;
 
 function Chatroom({username}) {
+
+  const chatStore = getChatStore();
 
   const [chatState, setChatState] = useState(chatStore.getState());
   const [visibleChatCount, setVisibleChatCount] = useState(PAGE_SIZE);
@@ -13,7 +15,7 @@ function Chatroom({username}) {
   useEffect(() => {
     const storageListener = (e) => {
       if (e.key === 'message-ui-react') {
-        chatStore.dispatch({type: UPDATE_CHAT, state: JSON.parse(e.newValue)});
+        chatStore.dispatch({type: SYNC_CHAT, state: JSON.parse(e.newValue)});
         setChatState(chatStore.getState());
       }
     };

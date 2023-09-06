@@ -1,12 +1,14 @@
 import {Button, Form, Input, Space, Typography} from 'antd';
 import React from 'react';
 import styles from './Welcome.module.css';
-import {JOIN_CHAT, chatStore} from '../../store/chatStore';
+import {JOIN_CHAT, getChatStore} from '../../store/chatStore';
 
 function Welcome({setUsername}) {
 
   const onSubmit = ({username}) => {
     setUsername(username);
+
+    const chatStore = getChatStore();
     chatStore.dispatch({
       type: JOIN_CHAT,
       username
